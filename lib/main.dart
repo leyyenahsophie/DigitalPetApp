@@ -15,6 +15,9 @@ class DigitalPetApp extends StatefulWidget {
 class _DigitalPetAppState extends State<DigitalPetApp> {
   int happinessLevel = 50; // Initial happiness level
   Color petColor = Colors.yellow; // Default pet color (neutral)
+  String petName = "Your Pet"; // Default pet name
+  TextEditingController nameController =
+      TextEditingController(); // Controller for text input
 
   // Function to update pet's mood color based on happiness level
   void _updatePetMood() {
@@ -45,6 +48,15 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
     });
   }
 
+  // Function to update pet name based on user input
+  void _setPetName() {
+    setState(() {
+      petName =
+          nameController.text.isNotEmpty ? nameController.text : "Your Pet";
+      nameController.clear(); // Clear input after setting the name
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,6 +73,33 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
                 color: petColor, // Dynamic pet color
                 shape: BoxShape.circle,
               ),
+            ),
+            SizedBox(height: 16.0),
+
+            // Display Pet's Name
+            Text(
+              "Name: $petName",
+              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 16.0),
+
+            // Text Field for entering pet name
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: TextField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  labelText: "Enter Pet's Name",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            SizedBox(height: 10.0),
+
+            // Button to Set Pet Name
+            ElevatedButton(
+              onPressed: _setPetName,
+              child: Text("Set Name"),
             ),
             SizedBox(height: 16.0),
 
